@@ -20,11 +20,20 @@ module InnerMessenger
     config.inner_messenger = ActiveSupport::OrderedOptions.new
 
     initializer :set_inner_messenger_scope do
-      p :initialize
+      InnerMessenger::Engine.configure do
+        klass { User }
+        identifier { |instance| instance.id }
+        sendable { |klass| klass.all }
+      end
+    end
+
+    def configure(*args, &block)
+      @raw_configuration = Configuration.new.set(&block)
+      @configuration = @raw_configuration.normalizer
     end
 
     def configuration
-      @configuration ||= Configuration.new
+      @configuration
     end
   end
 end
