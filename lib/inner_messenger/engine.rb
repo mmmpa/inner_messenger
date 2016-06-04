@@ -1,11 +1,8 @@
-require 'inner_messenger/public'
 require 'inner_messenger/configuration'
 
 module InnerMessenger
   class Engine < ::Rails::Engine
     isolate_namespace InnerMessenger
-    extend Public
-
 
     config.generators do |g|
       g.assets false
@@ -18,22 +15,5 @@ module InnerMessenger
     end
 
     config.inner_messenger = ActiveSupport::OrderedOptions.new
-
-    initializer :set_inner_messenger_scope do
-      InnerMessenger::Engine.configure do
-        klass { User }
-        identifier { |instance| instance.id }
-        sendable { |klass| klass.all }
-      end
-    end
-
-    def configure(*args, &block)
-      @raw_configuration = Configuration.new.set(&block)
-      @configuration = @raw_configuration.normalizer
-    end
-
-    def configuration
-      @configuration
-    end
   end
 end

@@ -1,22 +1,17 @@
 module InnerMessenger
   class Configuration
-    attr_reader :klass_proc, :identifier_proc, :sendable_proc
-
     def set(&block)
       instance_eval(&block)
       self
     end
 
-    def klass(&block)
-      @klass_proc = block
+    def method_missing(name, &block)
+      super unless Normalizer.method_defined?(name)
+      proc_store[name] = block
     end
 
-    def identifier(&block)
-      @identifier_proc = block
-    end
-
-    def sendable(&block)
-      @sendable_proc = block
+    def proc_store
+      @proc_store ||= ActiveSupport::OrderedOptions.new
     end
 
     def normalizer
@@ -26,23 +21,35 @@ module InnerMessenger
     private
 
     class Normalizer
-      def initialize(config)
-        @config = config
+      def initialize(config = nil)
+        @proc = config.proc_store
       end
 
       def klass
         @klass ||= begin
-          base = @config.klass_proc.()
+          base = @proc.klass.()
           String === base ? base.constantize : base
         end
       end
 
-      def sendable
-        @config.sendable_proc.(klass)
+      def sender(identifier)
+        @proc.sender.(klass, identifier)
       end
 
-      def identifier(record)
-        @config.identifier_proc.(record)
+      def receivers
+        @proc.receivers.(klass)
+      end
+
+      def receiver(identifier)
+        @proc.receiver.(receivers, identifier)
+      end
+
+      def identify(identifier)
+        @proc.identify.(klass, identifier)
+      end
+
+      def identifier(instance)
+        @proc.identifier.(instance)
       end
     end
   end

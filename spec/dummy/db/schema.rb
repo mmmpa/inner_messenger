@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20160603024051) do
 
   create_table "inner_messenger_messages", force: :cascade do |t|
     t.string   "owner_id"
+    t.text     "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
