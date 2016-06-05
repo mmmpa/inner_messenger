@@ -17,7 +17,6 @@ module InnerMessenger
     end
 
     def receiver(identifier)
-      p receivers
       receivers.find(identifier)
     end
 

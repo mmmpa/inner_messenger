@@ -13,15 +13,11 @@ module InnerMessenger
     end
 
     def find_receiver(identifier)
-      scope.receiver(identifier) || (raise NotFound)
-    rescue => e
-      raise NotFound, e
+      scope.receiver(identifier)
     end
 
     def find_sender(identifier)
-      scope.sender(identifier) || (raise NotFound)
-    rescue => e
-      raise NotFound, e
+      scope.sender(identifier)
     end
 
     class NotFound < StandardError

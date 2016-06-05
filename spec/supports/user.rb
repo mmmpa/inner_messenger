@@ -12,9 +12,9 @@ class User
 
     def select(id)
       if Array === id
-        all.select { |u| u.id.in? id }
+        all.select { |u| u.id.in? id.to_i }
       else
-        all.select { |u| u.id == id }
+        all.select { |u| u.id == id.to_i }
       end
     end
 

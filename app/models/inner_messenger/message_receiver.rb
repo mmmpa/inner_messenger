@@ -1,8 +1,8 @@
 module InnerMessenger
   class MessageReceiver < ApplicationRecord
-    belongs_to :message, inverse_of: :message_receiver
+    belongs_to :message, inverse_of: :message_receivers
 
-    validates :message,
+    validates :receiver_id, :message,
               presence: true
 
     validate -> { !!receiver }
@@ -12,8 +12,6 @@ module InnerMessenger
     end
 
     def receiver=(value)
-      id = Receiver.pick_id(value)
-      Receiver.find()
       self.receiver_id = Receiver.pick_id(value)
     end
   end
