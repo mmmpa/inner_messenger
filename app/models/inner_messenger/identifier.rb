@@ -1,7 +1,7 @@
 module InnerMessenger
   module Identifier
     def scope
-      @scope ||= Rails.application.config.inner_messenger.scope.new
+      @scope ||= InnerMessenger::Engine.configuration.scope.new
     end
 
     def pick_id(instance)

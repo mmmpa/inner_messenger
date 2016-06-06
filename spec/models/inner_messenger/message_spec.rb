@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module InnerMessenger
   RSpec.describe Message, :type => :model do
-    before { Rails.application.config.inner_messenger.scope = TestInnerMessengerScope }
+    before { InnerMessenger::Engine.configure! { scope TestInnerMessengerScope } }
 
     describe 'validation' do
       let(:message) { build(:inner_messenger_message) }

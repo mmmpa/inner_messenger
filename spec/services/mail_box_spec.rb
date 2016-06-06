@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module InnerMessenger
   describe 'mail box' do
-    before { Rails.application.config.inner_messenger.scope = TestInnerMessengerScope }
+    before { InnerMessenger::Engine.configure! { scope TestInnerMessengerScope } }
 
     let(:user1) { User.all.first }
     let(:user2) { User.all.second }

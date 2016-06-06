@@ -7,8 +7,7 @@ require 'rspec/rails'
 require 'factory_girl_rails'
 require 'rspec-html-matchers'
 
-
-p Dir[Rails.root.join('../supports/**/*.rb')].each { |f| require f }
+Dir[Rails.root.join('../supports/**/*.rb')].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
