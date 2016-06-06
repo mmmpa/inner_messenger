@@ -36,6 +36,33 @@ module InnerMessenger
       end
     end
 
+    describe 'scope' do
+      before do
+        create(:inner_messenger_message, receivers: User.all.second)
+        create(:inner_messenger_message, receivers: User.all.third)
+      end
+
+      describe 'sent' do
+        let(:sent1) { Message.sent_by(User.all.first) }
+        let(:sent2) { Message.sent_by(User.all.second) }
+        let(:sent3) { Message.sent_by(User.all.third) }
+
+        it { expect(sent1.size).to eq(2) }
+        it { expect(sent2.size).to eq(0) }
+        it { expect(sent3.size).to eq(0) }
+      end
+
+      describe 'received' do
+        let(:received1) { Message.received_by(User.all.first) }
+        let(:received2) { Message.received_by(User.all.second) }
+        let(:received3) { Message.received_by(User.all.third) }
+
+        it { expect(received1.size).to eq(0) }
+        it { expect(received2.size).to eq(1) }
+        it { expect(received3.size).to eq(1) }
+      end
+    end
+
     describe 'association' do
       let(:message) { create(:inner_messenger_message, receivers: User.all[1..3]) }
       subject { message.receivers }

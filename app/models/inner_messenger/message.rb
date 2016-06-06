@@ -9,6 +9,13 @@ module InnerMessenger
 
     before_validation :add_receivers
 
+    scope :sent_by, ->(owner) { where(owner_id: Owner.pick_id(owner)) }
+
+    scope :received_by, ->(receiver) {
+      joins(:message_receivers)
+        .where('inner_messenger_message_receivers.receiver_id == ?', Owner.pick_id(receiver))
+    }
+
     def save(*)
       raise CannotUpdate if persisted?
       super
