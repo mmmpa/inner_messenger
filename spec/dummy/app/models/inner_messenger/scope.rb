@@ -1,6 +1,6 @@
 module InnerMessenger
   class Scope
-    extend InnerMessenger::ScopeAbstract
+    include InnerMessenger::ScopeAbstract
 
     def klass
       Account

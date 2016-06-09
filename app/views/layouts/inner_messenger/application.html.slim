@@ -1,0 +1,10 @@
+doctype html
+html
+  head
+    title
+      | Inner messenger
+    = stylesheet_link_tag    "inner_messenger/application", media: "all"
+    = javascript_include_tag "inner_messenger/application"
+    = csrf_meta_tags
+  body
+    = yield

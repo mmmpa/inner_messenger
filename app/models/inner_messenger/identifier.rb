@@ -1,7 +1,7 @@
 module InnerMessenger
   module Identifier
     def scope
-      @scope ||= InnerMessenger::Engine.configuration.scope.new
+      @scope = InnerMessenger::Engine.configuration.scope.new
     end
 
     def pick_id(instance)
@@ -10,6 +10,10 @@ module InnerMessenger
 
     def receivers
       scope.receivers
+    end
+
+    def find_user(identifier)
+      scope.user(identifier)
     end
 
     def find_receiver(identifier)

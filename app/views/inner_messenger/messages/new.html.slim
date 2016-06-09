@@ -1,0 +1,9 @@
+= form_for :message, url: inner_messenger_messages_path, method: :post, html: {class: 'inner-messenger new-mail'} do |f|
+  section.title
+    h1 Title
+    = f.text_field :title
+  section.body
+    h1 Body
+    = f.text_area :body
+  section.submit
+    = f.submit :submit

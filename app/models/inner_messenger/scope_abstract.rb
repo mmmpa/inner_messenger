@@ -4,6 +4,10 @@ module InnerMessenger
       raise ImplementRequired
     end
 
+    def user(identifier)
+      klass.find(identifier)
+    end
+
     def identifier(instance)
       instance.id
     end

@@ -1,4 +1,5 @@
 require 'inner_messenger/configuration'
+require 'slim-rails'
 
 module InnerMessenger
   class Engine < ::Rails::Engine

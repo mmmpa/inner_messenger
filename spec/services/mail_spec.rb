@@ -2,7 +2,7 @@ require 'rails_helper'
 
 module InnerMessenger
   describe 'mail' do
-    before { Rails.application.config.inner_messenger.scope = TestInnerMessengerScope }
+    before { InnerMessenger::Engine.configure! { scope TestInnerMessengerScope } }
 
     describe 'deliver' do
       let(:user1) { User.all[0] }
